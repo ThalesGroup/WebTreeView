@@ -29,7 +29,7 @@ The Recursive priority checkbox calculates and show the max priority of its chil
 DO NOT RENAME THE EXCEL TABS - they are explicitly used in the VBA macro\
 You can modify WebViewTemplate.html to customize graphics
 
-### Optional
+## Optional
 Scenarios can be created by assigning a number to it and filling the scenario tab (color not implemented yet). See examples in TreeSample.xlsm.
 For scenarios arrows to work, you need to keep the leader-line.min.js file to your directory (MIT licensed as well) which can be found [here](https://raw.githubusercontent.com/anseki/leader-line/master/leader-line.min.js)
 
