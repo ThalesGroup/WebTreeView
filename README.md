@@ -1,44 +1,40 @@
-# Thales Open Source Template Project
+# WebTreeView
 
-Template for creating a new project in the [Thales GitHub organization](https://github.com/ThalesGroup).
+Generate an HTML view of a tree organized set of data from an excel file.
+Originally created for cybersecurity attack paths visualization.
 
-Each Thales OSS project repository **MUST** contain the following files at the root:
+![WebTreeView Snapshot](./snapshot_1.png)
 
-- a `LICENSE` which has been chosen in accordance with legal department depending on your needs
+## Getting started
 
-- a `README.md` outlining the project goals, sponsoring sig, and community contact information, [GitHub tips about README.md](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/about-readmes)
+The Excel file is used for creating the information tree.
+The VBA macro inside (button "Generate HTML") creates a WebView.html file in the same directory based on the provided WebViewTemplate.html file.
+The Macro.bas file of this repository is already in the Excel file. It's only exported here to ease configuration control.
 
-- a `CONTRIBUTING.md` outlining how to contribute to the project, how to submit a pull request and an issue
+The Excel file already contains a working example.
 
-- a `SECURITY.md` outlining how the security concerns are handled, [GitHub tips about SECURITY.md](https://docs.github.com/en/github/managing-security-vulnerabilities/adding-a-security-policy-to-your-repository)
+The resulting HTML file can be displayed in Thales Wiki (with the help of the Html-bobswift object).
 
-Below is an example of the common structure and information expected in a README.
+## Usage
 
-**Please keep this structure as is and only fill the content for each section according to your project.**
+Git clone the repository or download TreeSample.xlsm and WebViewTemplate.html.
 
-If you need assistance or have question, please contact oss@thalesgroup.com
+Open TreeSample.xlsm in Excel\
+Enable Macros\
+!!!!!!! IT IS BAD SECURITY PRACTICE TO EXECUTE EXCEL MACROS FROM SOURCES YOU DON'T TRUST !!!!!!
+!!!!!!! PLEASE READ SECURITY.md FOR DETAILS !!!!!!!!
+Click on "Generate HTML" in the "Attack Paths" tab\
+Open the WebView.html file in your favorite browser
 
-## Get started
+In the HTML file, the Zoom level hides and shows the different tree levels.\
+The Recursive priority checkbox calculates and show the max priority of its children elements.
 
-XXX project purpose it to ...
+DO NOT RENAME THE EXCEL TABS - they are explicitly used in the VBA macro\
+You can modify WebViewTemplate.html to customize graphics
 
-**Please also add the description into the About section (Description field)**
+Optional:\
+Scenarios can be created by assigning a number to it and filling the scenario tab (color not implemented yet). See examples in TreeSample.xlsm.
+For scenarios arrows to work, you need to keep the leader-line.min.js file to your directory (MIT licensed as well)
+(can be found here: https://raw.githubusercontent.com/anseki/leader-line/master/leader-line.min.js)
 
-## Documentation
-
-Documentation is available at [xxx/docs](https://xxx/docs/).
-
-You can use [GitHub pages](https://guides.github.com/features/pages/) to create your documentation.
-
-See an example here : https://github.com/ThalesGroup/ThalesGroup.github.io
-
-**Please also add the documentation URL into the About section (Website field)**
-
-## Contributing
-
-If you are interested in contributing to the XXX project, start by reading the [Contributing guide](/CONTRIBUTING.md).
-
-## License
-
-The chosen license in accordance with legal department must be defined into an explicit [LICENSE](https://github.com/ThalesGroup/template-project/blob/master/LICENSE) file at the root of the repository
-You can also link this file in this README section.
+You can now have multi-paths for scenarios. For example, if you want to split scenario #1 in two, just tag 1.1 and 1.2 in the next columns (see examples in TreeSample.xlsm).

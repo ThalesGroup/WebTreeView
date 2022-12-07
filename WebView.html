@@ -1,0 +1,522 @@
+<!-- 
+WebTreeView (c) by Erwan Hamon
+WebTreeView is licensed under a MIT License
+https://github.com/ThalesGroup/WebTreeView
+-->
+<script src="leader-line.min.js"></script>
+<script>
+	const json = 
+{"roots": [
+    {"text": "Risk Origin", "children": [
+        {"text": "Origin 1", "prio": "medium"},
+        {"text": "Origin 2", "prio": "medium"},
+        {"text": "Origin 3", "prio": "high", "scenario": "1"},
+        {"text": "Origin 4", "prio": "low", "scenario": "2"},
+        {"text": "Origin 5", "prio": "na"}
+    ]},
+    {"text": "Stakeholder", "children": [
+        {"text": "Internal", "children": [
+            {"text": "Internal Dev", "prio": "low"},
+            {"text": "Internal Maint", "prio": "low"},
+            {"text": "Subcontractors", "prio": "medium"}
+        ]},
+        {"text": "Service Provider", "children": [
+            {"text": "Network Provider", "children": [
+                {"text": "Network Provider 1", "prio": "medium", "scenario": "2"}
+            ]},
+            {"text": "Partners", "children": [
+                {"text": "Partner Network", "prio": "medium", "scenario": "2"}
+            ]},
+            {"text": "Data Provider", "prio": "low"},
+            {"text": "Maintenance Provider", "prio": "high", "scenario": "1"}
+        ]},
+        {"text": "Customer", "children": [
+            {"text": "Administrators", "prio": "na"},
+            {"text": "Maintenance", "prio": "na"}
+        ]}
+    ]},
+    {"text": "Entrypoint", "children": [
+        {"text": "Remote Services", "children": [
+            {"text": "VPN", "prio": "high"},
+            {"text": "Web Service", "prio": "medium"},
+            {"text": "Web", "prio": "medium"},
+            {"text": "Operator access", "prio": "medium"}
+        ]},
+        {"text": "Maintenance", "children": [
+            {"text": "Installation files", "prio": "high"},
+            {"text": "Configuration files", "prio": "high"},
+            {"text": "Maintenance Tools", "prio": "high", "scenario": "1"}
+        ]},
+        {"text": "Business Data", "children": [
+            {"text": "Construction plan", "prio": "medium"},
+            {"text": "Pay Data", "prio": "high"},
+            {"text": "Env Data", "prio": "low", "scenario": "2"}
+        ]},
+        {"text": "Time Source", "children": [
+            {"text": "NTP", "prio": "medium"}
+        ]},
+        {"text": "Suppliers", "children": [
+            {"text": "HW Supplier", "children": [
+                {"text": "Processing", "prio": "low"},
+                {"text": "Network", "prio": "high"}
+            ]},
+            {"text": "SW Supplier", "children": [
+                {"text": "COTS/OSS", "prio": "high"},
+                {"text": "SW Subcontractor", "prio": "low"}
+            ]}
+        ]},
+        {"text": "Physical Access", "children": [
+            {"text": "Energy", "prio": "na"},
+            {"text": "Site Access", "prio": "na"}
+        ]},
+        {"text": "Sub Env", "children": [
+            {"text": "Test Env", "prio": "low"},
+            {"text": "Backup Env", "prio": "low"},
+            {"text": "Training Env", "prio": "tbd"}
+        ]}
+    ]},
+    {"text": "Vulnerability", "children": [
+        {"text": "Misuse", "children": [
+            {"text": "Removable Media", "prio": "high"}
+        ]},
+        {"text": "Unprotected Com", "children": [
+            {"text": "Weak Auth", "prio": "high"},
+            {"text": "Weak Encr", "prio": "high"}
+        ]},
+        {"text": "SW Vuln", "children": [
+            {"text": "SW Vuln", "prio": "medium", "scenario": "2"},
+            {"text": "COTS/OSS Vuln", "prio": "high", "scenario": "1.1"},
+            {"text": "Backdoor", "prio": "medium"},
+            {"text": "Weak Config", "prio": "medium"}
+        ]},
+        {"text": "HW Vuln", "children": [
+            {"text": "Backdoor", "prio": "medium"},
+            {"text": "Firware Vuln", "prio": "low"},
+            {"text": "Weak Config", "prio": "high"}
+        ]},
+        {"text": "Weak Access Ctrl", "children": [
+            {"text": "Rogue Device", "prio": "na"},
+            {"text": "Weak Credentials", "prio": "high"}
+        ]},
+        {"text": "Weak Monitoring", "children": [
+            {"text": "Lack of Logs", "prio": "medium"},
+            {"text": "Weak Alerting", "prio": "medium", "scenario": "1.2"},
+            {"text": "Log Integrity", "prio": "medium"}
+        ]}
+    ]},
+    {"text": "Lateral Mvmt", "children": [
+        {"text": "Segregation", "children": [
+            {"text": "NW Seg.", "prio": "medium"},
+            {"text": "Process Seg.", "prio": "low", "scenario": "2"},
+            {"text": "Storage Seg.", "prio": "medium"}
+        ]},
+        {"text": "Unprotected Com", "children": [
+            {"text": "Weak Auth", "prio": "medium"},
+            {"text": "Weak Encr", "prio": "medium"},
+            {"text": "Stolen Credentials", "prio": "medium"}
+        ]},
+        {"text": "SW Vuln", "children": [
+            {"text": "SW Vuln", "prio": "medium"},
+            {"text": "COTS/OSS Vuln", "prio": "high", "scenario": "1.1"},
+            {"text": "Backdoor", "prio": "medium"},
+            {"text": "Weak Config", "prio": "medium"}
+        ]},
+        {"text": "HW Vuln", "children": [
+            {"text": "Backdoor", "prio": "medium"},
+            {"text": "Firware Vuln", "prio": "low"},
+            {"text": "Weak Config", "prio": "high"}
+        ]},
+        {"text": "Weak Monitoring", "children": [
+            {"text": "Lack of Logs", "prio": "medium"},
+            {"text": "Weak Alerting", "prio": "medium", "scenario": "1.2"},
+            {"text": "Log Integrity", "prio": "medium"}
+        ]}
+    ]},
+    {"text": "Capability", "children": [
+        {"text": "Code Execution", "prio": "high", "scenario": "1.1, 2"},
+        {"text": "Deny Of Service", "prio": "medium"},
+        {"text": "Data Leak", "prio": "low"},
+        {"text": "Data Corruption", "prio": "medium"}
+    ]},
+    {"text": "Target Objectives", "children": [
+        {"text": "Function 1", "children": [
+            {"text": "Integrity", "prio": "high"},
+            {"text": "Availability", "prio": "high", "scenario": "2"},
+            {"text": "Confidentiality", "prio": "low"}
+        ]},
+        {"text": "Function 2", "children": [
+            {"text": "Integrity", "prio": "high"},
+            {"text": "Availability", "prio": "high", "scenario": "1"}
+        ]},
+        {"text": "Function 3", "children": [
+            {"text": "Integrity", "prio": "high"},
+            {"text": "Availability", "prio": "high"},
+            {"text": "Confidentiality", "prio": "low"}
+        ]},
+        {"text": "Function 4", "children": [
+            {"text": "Integrity", "prio": "medium"},
+            {"text": "Availability", "prio": "medium"},
+            {"text": "Confidentiality", "prio": "low"}
+        ]},
+        {"text": "Loss Of Trust", "prio": "medium"},
+        {"text": "Stolen Ressources", "prio": "low"}
+    ]},
+    {"text": "Business Impact", "children": [
+        {"text": "Operators", "children": [
+            {"text": "Workload", "prio": "high"},
+            {"text": "Misinformation", "prio": "medium"}
+        ]},
+        {"text": "Branding", "children": [
+            {"text": "National Attention", "prio": "high", "scenario": "2"},
+            {"text": "Local Attention", "prio": "medium"}
+        ]},
+        {"text": "Operationnal", "children": [
+            {"text": "Limited Throughput", "prio": "medium"},
+            {"text": "Unable to serve", "prio": "high", "scenario": "1"}
+        ]},
+        {"text": "Economic", "children": [
+            {"text": "Ransom", "prio": "medium", "scenario": "1"}
+        ]}
+    ]}
+]
+, "scenarios": {
+    "sc1": {"name": "Malware", "color": "#FFFFFF"},
+    "sc2": {"name": "Researcher", "color": "#FFFFFF"}
+  }
+, "version": {
+    "title": "Example WebTreeView structure for Cyber",
+    "version": "1.02",
+    "date": "03/10/2022"
+}
+}	
+	const color = {"low": "#BFFF00", "medium": "#FFBF00", "high": "#FF0000", "na": "#A6A6A6", "tbd": "#666666"};
+	const weight = {"low": 1, "medium": 2, "high": 3, "na": -1, "tbd": 0};
+	
+	// Unique id for each div box
+	let id_cnt = 1;
+	// Array of lines drawn
+	let sc_lines = [];
+	// Arrays of elems in a scenario
+	let sc_elems = {};
+
+	function show_level() {
+		const level = parseInt(document.getElementById("slider").value);
+	
+		for (let i = 1; i < 6; i++) {
+			items = document.querySelectorAll('[id^=level'+i+']')
+			for(const item of items)
+				if(item.getAttribute('locked') == 'false')
+					item.checked = i <= level;
+		}
+	}
+	
+	function createDivLeaf(text, prio) {
+		const wc = document.createElement('div');
+		wc.setAttribute('class', 'lbl-leaf');
+		wc.textContent = text;
+		wc.style.background = color[prio];
+		
+		return wc;
+	}
+	
+	function createDivGroup(text, prio, level, cnt) {
+		const wc = document.createElement('div');
+		wc.setAttribute('class', 'wrap-collabsible');
+		
+		const input = document.createElement('input');
+		const id_input = 'level'+level+'_'+cnt;
+		input.setAttribute('id', id_input);
+		input.setAttribute('class', 'toggle');
+		input.setAttribute('type', 'checkbox');
+		input.setAttribute('locked', 'false');
+		input.setAttribute('onclick', 'sc_warn(this)');
+		wc.appendChild(input);
+		
+		const label = document.createElement('label');
+		label.setAttribute('for', id_input);
+		label.setAttribute('class', 'lbl-toggle');
+		label.style.borderColor = color[prio];
+		label.textContent = text;
+		wc.appendChild(label);
+		
+		const cc = document.createElement('div');
+		cc.setAttribute('class', 'collapsible-content');
+		cc.setAttribute('ontransitionend', 'clean_sc()');
+		wc.appendChild(cc);
+		
+		const inner = document.createElement('div');
+		inner.setAttribute('class', 'content-inner');
+
+		cc.appendChild(inner);
+		
+		return [wc, inner];
+	}
+	
+	function createFromJson(js, p, level, col) {
+		// This node is a group
+		let prio = "na";
+		if('children' in js && js['children'].length > 0) {
+			const table = document.createElement('table');
+			const tbody = document.createElement('tbody');
+			table.appendChild(tbody);
+			
+			let prioMax = "na";
+			for (const elem of js.children) {
+				const tr = document.createElement('tr');
+				prio = createFromJson(elem, tr, level+1, col);
+				if(weight[prio] > weight[prioMax])
+					prioMax = prio;
+				tbody.appendChild(tr);
+			}
+			prio = prioMax;
+			const current = createDivGroup(js.text, prio, level, id_cnt);
+			id_cnt+=1;
+			current[1].appendChild(table);
+			p.appendChild(current[0]);
+		} else {
+		// This node is a leaf	
+			prio = js.prio;
+			const current = createDivLeaf(js.text, prio);
+			// add items to the scenario elements list
+			if ('scenario' in js) {
+				for (let sc_num of js.scenario.split(',')) {
+					sc_num = sc_num.trim();
+					sc_id = sc_num.split('.')[0];
+					sc_str = "sc"+sc_id;
+					if (!(sc_str in sc_elems))
+						sc_elems[sc_str] = [];
+					if(!(sc_elems[sc_str][col-1]))
+						sc_elems[sc_str][col-1] = [];
+					sc_elems[sc_str][col-1].push({'elem': current, 'tag': sc_num});
+				}
+			}
+			p.appendChild(current);
+		}
+		return prio;
+	}
+	
+	function recPrio(rec_cb) {
+		const all_tog = document.getElementsByClassName("lbl-toggle");
+		for (const elem of all_tog) {
+			if (rec_cb.checked) {
+				elem.style.borderStyle = 'solid';
+			} else {
+				elem.style.borderStyle = 'none';
+			}
+		}
+	}
+	
+	function sc_warn(ele) {
+		if(ele.getAttribute('locked') == 'true') {
+			ele.checked = true;
+			alert("Locked by Scenario");
+		} 
+	}
+
+	function clean_sc() {
+		for(const line of sc_lines)
+			line.position();
+	}
+
+	function show_sc(sc_num) {
+		const cols = sc_elems[sc_num];
+		// open all nodes necessary to show the items and lock them
+		for(const col of cols)
+			if (col)
+				for(let item of col) {
+					item = item.elem;
+					while(item.parentElement != null) {
+						item = item.parentElement;
+						if(item.className == "collapsible-content") {
+							item.previousSibling.previousSibling.checked = true;
+							item.previousSibling.previousSibling.setAttribute('locked', 'true');
+						}
+					}
+				}
+
+		// construct the scenario lines'
+		for(let i=0; i< cols.length-1; i++)
+			if (cols[i])
+				for(let from of cols[i]) {
+					let found = false;
+					let shift = 0;
+					while (!found && (i+1+shift < cols.length)) {
+						if(cols[i+1+shift])
+							for(let to of cols[i+1+shift]) {
+								if(to.tag === from.tag || to.tag.startsWith(from.tag + '.') || from.tag.startsWith(to.tag + '.')) {
+									found = true;
+									sc_lines.push(new LeaderLine(from.elem, to.elem, {path: 'fluid', dropShadow: true}));
+								}
+							}
+						shift++;
+					}
+				}
+	}
+
+	function remove_sc() {
+		items = document.querySelectorAll('[id^=level]')
+		// unlock all nodes locked in show_sc
+		for(const item of items)
+			item.setAttribute('locked', 'false');
+		// remove the lines
+		for(const line of sc_lines)
+			line.remove();
+		sc_lines = [];
+	}
+
+	function select_sc(elem) {
+		remove_sc();
+		if(elem.value != 'off')
+			show_sc(elem.value);
+	}
+
+	function init() {
+		const slider = document.getElementById("slider");
+		//slider.addEventListener('change', show_level);
+		slider.addEventListener('input', show_level);
+		
+		const tr = document.getElementById("table_row")
+		
+		// Add all tree roots to table
+		let col = 1; // col id needed for multipath scenarios
+		for (const el of json.roots) {
+			const td = document.createElement('td');
+			createFromJson(el, tr, 1, col++); 
+			tr.appendChild(td);
+		}
+		
+		// Add scenarios to select list
+		const sel = document.getElementById("sc-select");
+		for (const sc in json.scenarios) {
+			const opt = document.createElement("option");
+			opt.value = sc;
+			opt.text = json.scenarios[sc].name;
+			sel.add(opt, null);
+		}
+
+		show_level();
+		if (json.version)
+			document.getElementById("ap_title").textContent = json.version.title + " v" + json.version.version + " - " + json.version.date;
+		document.getElementById("template").hidden = false;
+	}
+	
+	window.addEventListener('load', init);
+</script>
+
+<style>
+.wrap-collabsible {
+  margin-bottom: 1.2rem 0;
+}
+
+input[type='checkbox'] {
+  display: none;
+}
+
+.lbl-leaf {
+  display: block;
+
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 0.8rem;
+  text-align: center;
+
+  padding: 0.6rem;
+
+  color: #000000;
+  background: #0069FF;
+
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+}
+
+.lbl-toggle {
+  display: block;
+
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  text-align: center;
+
+  padding: 0.8rem;
+
+  color: #DDD;
+  background: #0069FF;
+
+  cursor: pointer;
+
+  border-radius: 7px;
+  border: 5px;
+  border-style: none;
+  transition: all 0.25s ease-out;
+}
+
+.lbl-toggle:hover {
+  color: #FFF;
+}
+
+.lbl-toggle::before {
+  content: ' ';
+  display: inline-block;
+
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid currentColor;
+  vertical-align: middle;
+  margin-right: .7rem;
+  transform: translateY(-2px);
+
+  transition: transform .2s ease-out;
+}
+
+.toggle:checked + .lbl-toggle::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+
+.collapsible-content {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height ease-in-out;
+}
+
+.toggle:checked + .lbl-toggle + .collapsible-content {
+  max-height: 800vh;
+}
+
+.toggle:checked + .lbl-toggle {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.collapsible-content .content-inner {
+  background: rgba(0, 105, 255, .2);
+  border-bottom: 1px solid rgba(0, 105, 255, .45);
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding: .5rem 1rem;
+}
+
+.base {
+  background: #FFFFFF
+}
+</style>
+
+<body>
+<p>
+    The slider controls the depth of the tree displayed. <br>
+    Zoom level: <input id="slider" type="range" min="0" max="5" value="1"><br>
+	Recursive priority: <input class="checkbox" type="checkbox" onclick="recPrio(this)" required name="terms" style="display: inline-block;">
+	Show scenario: <select name="sc_id" id="sc-select" onchange="select_sc(this)">
+		<option value="off">Off</option>		
+	</select>
+</p>
+<b id="ap_title"></b>
+<div id="template" class ="base" hidden>
+<table>
+	<tbody>
+		<tr id="table_row"></tr>
+	</tbody>
+</table>
+</div>
+</body>
+
