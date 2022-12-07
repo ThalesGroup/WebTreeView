@@ -13,18 +13,15 @@ The Macro.bas file of this repository is already in the Excel file. It's only ex
 
 The Excel file already contains a working example.
 
-The resulting HTML file can be displayed in Thales Wiki (with the help of the Html-bobswift object).
-
 ## Usage
 
-Git clone the repository or download TreeSample.xlsm and WebViewTemplate.html.
-
-Open TreeSample.xlsm in Excel\
-Enable Macros\
+1. Git clone the repository or download TreeSample.xlsm and WebViewTemplate.html.
+2. Open TreeSample.xlsm in Excel
+3. Enable Macros\
 !!!!!!! IT IS BAD SECURITY PRACTICE TO EXECUTE EXCEL MACROS FROM SOURCES YOU DON'T TRUST !!!!!!\
-!!!!!!! PLEASE READ SECURITY.md FOR DETAILS !!!!!!!!\
-Click on "Generate HTML" in the "Attack Paths" tab\
-Open the WebView.html file in your favorite browser
+!!!!!!! PLEASE READ SECURITY.md FOR DETAILS !!!!!!!!
+4. Click on "Generate HTML" in the "Attack Paths" tab
+5. Open the WebView.html file in your favorite browser
 
 In the HTML file, the Zoom level hides and shows the different tree levels.\
 The Recursive priority checkbox calculates and show the max priority of its children elements.
@@ -32,9 +29,8 @@ The Recursive priority checkbox calculates and show the max priority of its chil
 DO NOT RENAME THE EXCEL TABS - they are explicitly used in the VBA macro\
 You can modify WebViewTemplate.html to customize graphics
 
-Optional:\
+### Optional
 Scenarios can be created by assigning a number to it and filling the scenario tab (color not implemented yet). See examples in TreeSample.xlsm.
-For scenarios arrows to work, you need to keep the leader-line.min.js file to your directory (MIT licensed as well)
-(can be found here: https://raw.githubusercontent.com/anseki/leader-line/master/leader-line.min.js)
+For scenarios arrows to work, you need to keep the leader-line.min.js file to your directory (MIT licensed as well) which can be found [here](https://raw.githubusercontent.com/anseki/leader-line/master/leader-line.min.js)
 
 You can now have multi-paths for scenarios. For example, if you want to split scenario #1 in two, just tag 1.1 and 1.2 in the next columns (see examples in TreeSample.xlsm).
