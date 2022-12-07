@@ -21,8 +21,8 @@ Git clone the repository or download TreeSample.xlsm and WebViewTemplate.html.
 
 Open TreeSample.xlsm in Excel\
 Enable Macros\
-!!!!!!! IT IS BAD SECURITY PRACTICE TO EXECUTE EXCEL MACROS FROM SOURCES YOU DON'T TRUST !!!!!!
-!!!!!!! PLEASE READ SECURITY.md FOR DETAILS !!!!!!!!
+!!!!!!! IT IS BAD SECURITY PRACTICE TO EXECUTE EXCEL MACROS FROM SOURCES YOU DON'T TRUST !!!!!!\
+!!!!!!! PLEASE READ SECURITY.md FOR DETAILS !!!!!!!!\
 Click on "Generate HTML" in the "Attack Paths" tab\
 Open the WebView.html file in your favorite browser
 
